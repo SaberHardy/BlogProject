@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User</title>
-</head>
-<body>
-{% for fruit in list_fruits %}
-    <h1>Hello {{ loop.index }}, {{ fruit|int + 4 }}</h1>
-{% endfor %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    {% for fruit in list_fruits %}
+        <h1>Hello {{ loop.index }}, {{ fruit|int + 4 }}</h1>
+    {% endfor %}
+{% endblock %}

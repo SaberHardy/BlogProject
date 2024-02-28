@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Error page</title>
-</head>
-<body>
-<center>
-    <h1>
-        Sorry, we can not find the page<br> try again!!
-    </h1>
-</center>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <center>
+        <h1>
+            Sorry, we can not find the page<br> try again!!
+        </h1>
+    </center>
+{% endblock %}
