@@ -8,10 +8,10 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/user/')
-def user():
-    list_fruits = [1, 1, 2]
-    return render_template("user.html", list_fruits=list_fruits)
+@app.route('/user/<name>/')
+def user(name):
+    name = name
+    return render_template("user.html", name=name)
 
 
 @app.errorhandler(404)
