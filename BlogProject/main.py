@@ -11,7 +11,11 @@ app = Flask(__name__, template_folder='templates')  # static_folder='static')
 
 # Create a Secret Key
 app.config["SECRET_KEY"] = "mySecretKey"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+# Sqlite DB
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+# My SqlDB
+# app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://username:password@localhost/database_name"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:saber19051995@localhost/our_users"
 
 db = SQLAlchemy(app)
 

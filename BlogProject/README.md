@@ -26,3 +26,11 @@
 
 > you can see the database created inside the folder instances
 > run the terminal again
+> 
+> ------------- Use mysql instead of sqlite -----------
+> pip3 install mysql-connector
+> pip3 install mysql-connector-python
+> pip3 install mysql-connector-python
+> 
+> Create a python file create_db_file.py
+> 
