@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, template_folder='templates')  # static_folder='static')
 
 # Create a Secret Key
 app.config["SECRET_KEY"] = "mySecretKey"
