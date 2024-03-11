@@ -1,10 +1,5 @@
-from flask import Flask, render_template, request, flash
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
-from datetime import datetime
-from flask_sqlalchemy import SQLAlchemy
-
+from flask import Flask, render_template, flash
+from models import UsersModel, db
 from forms import UserForm
 
 app = Flask(__name__, template_folder='templates')  # static_folder='static')
@@ -15,25 +10,9 @@ app.config["SECRET_KEY"] = "mySecretKey"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 # My SqlDB
 # app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://username:password@localhost/database_name"
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:YOUR_PASSWORD@localhost/our_users"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:PASSWORD@localhost/our_users"
 
-db = SQLAlchemy(app)
-
-
-class UsersModel(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(100), nullable=False, unique=True)
-    date_added = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return '<Name %r>' % self.name
-
-
-# Create Form Class
-class NameForm(FlaskForm):
-    name = StringField("What's your name", validators=[DataRequired()])
-    submit = SubmitField("Submit")
+db.init_app(app)
 
 
 @app.route('/user/add', methods=["Post", "Get"])
@@ -84,7 +63,7 @@ def page_not_found(error):
 @app.route('/name', methods=['GET', 'POST'])
 def name():
     name = None
-    form = NameForm()
+    form = UserForm()
     if form.validate_on_submit():
         name = form.name.data
         form.name.data = ''
