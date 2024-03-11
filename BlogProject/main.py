@@ -2,11 +2,26 @@ from flask import Flask, render_template, request, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, template_folder='templates')  # static_folder='static')
 
 # Create a Secret Key
 app.config["SECRET_KEY"] = "mySecretKey"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+
+db = SQLAlchemy(app)
+
+
+class UsersModel(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    date_added = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Name %r>' % self.name
 
 
 # Create Form Class

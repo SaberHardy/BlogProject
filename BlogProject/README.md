@@ -17,3 +17,12 @@
 > ----------- Server Error ---------
 > chrome://net-internals/#sockets
 > 
+
+> -------- After creating the model database -------
+> Run in the terminal ( in mac run python3, in windows run 'py')
+> from main import db, app
+> app.app_context().push()
+> db.create_all()
+
+> you can see the database created inside the folder instances
+> run the terminal again
