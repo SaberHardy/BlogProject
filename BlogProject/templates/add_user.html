@@ -34,13 +34,16 @@
         {% for user in all_users %}
             <div class="card shadow-lg p-3 mb-5 bg-white rounded" style="width: 18rem;">
                 <div class="card-body box-shadow">
-                    <h5 class="card-title">{{ user.id }} - {{ user.name }}</h5>
+                    <div class="name-edit">
+                        <h5 class="card-title">{{ user.id }} - {{ user.name }}</h5>
+                        <a href="{{ url_for('update_user', id=user.id) }}">
+                            <i class="bi bi-pencil-square text-success"></i>
+                        </a>
+                    </div>
                     <p class="card-text"> {{ user.email }}</p>
                 </div>
             </div>
-
-
-           <br>
+            <br>
         {% endfor %}
 
     {% endif %}
