@@ -34,3 +34,20 @@
 > 
 > Create a python file create_db_file.py
 > 
+> ------------- Migrations -----------
+> In case you want to add few columns to the database
+> pip3 install Flask-Migrate
+> from flask_migrate import Migrate
+> under  this line: db = SQLAlchemy(app)
+> migrate = Migrate(app, db)
+> In the terminal type:
+> flask db init
+> flask db migrate -m 'initial migration'
+> flask db upgrade
+> 
+> run server and check
+> 
+>> NOTE:
+> Any time you want to make migrations just type:
+> flask db migrate -m "added something"
+> flask db upgrade
