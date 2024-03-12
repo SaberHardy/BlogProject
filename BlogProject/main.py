@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, request
+from flask import Flask, render_template, flash, request, redirect, url_for
 from models import UsersModel, db
 from forms import UserForm
 from secret_staff import SECRET_STAFF
@@ -84,15 +84,15 @@ def update_user(id):
         try:
             db.session.commit()
             flash("User updated successfully!")
-            return render_template("update_user.html",
-                                   form=form,
-                                   user_to_update=user_to_update)
+            return redirect(url_for('update_user', id=id))
         except:
             flash("Error user")
             return render_template("update_user.html",
                                    form=form,
                                    user_to_update=user_to_update)
     else:
+        form.name.data = user_to_update.name
+        form.email.data = user_to_update.email
         return render_template("update_user.html",
                                form=form,
                                user_to_update=user_to_update)

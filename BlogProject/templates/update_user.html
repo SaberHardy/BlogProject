@@ -21,10 +21,12 @@
             {{ form.hidden_tag() }}
 
             {{ form.name.label() }}
-            {{ form.name(class="form-control", value=user_to_update.name) }}
+             {{ form.name(class="form-control") }}
+            {# {{ form.name(class="form-control", value=user_to_update.name) }}#}
 
             {{ form.email.label() }}
-            {{ form.email(class="form-control", value=user_to_update.email) }}
+             {{ form.email(class="form-control") }}
+            {# {{ form.email(class="form-control", value=user_to_update.email) }}#}
 
             <br>
             {{ form.submit(class='btn btn-success') }}
