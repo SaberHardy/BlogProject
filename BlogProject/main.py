@@ -41,8 +41,9 @@ def add_user():
 
 
 @app.route('/')
-def index():
-    return render_template("index.html")
+def all_users():
+    get_users = UsersModel.query.all()
+    return render_template("index.html", all_users=get_users)
 
 
 @app.route('/user/<name>/')
@@ -84,7 +85,7 @@ def update_user(id):
         try:
             db.session.commit()
             flash("User updated successfully!")
-            return redirect(url_for('update_user', id=id))
+            return redirect(url_for('all_users'))
         except:
             flash("Error user")
             return render_template("update_user.html",
@@ -96,3 +97,18 @@ def update_user(id):
         return render_template("update_user.html",
                                form=form,
                                user_to_update=user_to_update)
+
+
+@app.route('/delete/<int:id>/', methods=['POST', 'GET'])
+def delete_user(id):
+    user_to_delete = db.session.get(UsersModel, id)
+    try:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        flash("User deleted successfully")
+        return render_template("index.html",
+                               user_to_delete=user_to_delete)
+    except:
+        flash("Error user")
+
+    return redirect(url_for('all_users'))
