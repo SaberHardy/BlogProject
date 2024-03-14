@@ -2,7 +2,6 @@ from flask import Flask, render_template, flash, request, redirect, url_for
 from models import UsersModel, db
 from forms import UserForm
 from secret_staff import SECRET_STAFF
-from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__, template_folder='templates')  # static_folder='static')
 
