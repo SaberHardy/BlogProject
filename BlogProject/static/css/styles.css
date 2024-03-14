@@ -11,3 +11,11 @@ h2 {
     display: flex;
     justify-content: space-between;
 }
+
+.btn-edit-rmv {
+    display: flex;
+}
+
+.btn-edit-rmv a {
+    margin: 0 20px;
+}

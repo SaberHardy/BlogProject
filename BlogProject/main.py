@@ -107,8 +107,7 @@ def delete_user(id):
         db.session.delete(user_to_delete)
         db.session.commit()
         flash("User deleted successfully")
-        return render_template("index.html",
-                               user_to_delete=user_to_delete)
+        return redirect(url_for('all_users'))
     except:
         flash("Error user")
 
