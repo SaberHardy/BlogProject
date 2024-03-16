@@ -3,6 +3,7 @@ from models import UsersModel, db
 from forms import UserForm
 from secret_staff import SECRET_STAFF
 from flask_migrate import Migrate
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__, template_folder='templates')  # static_folder='static')
 
@@ -27,16 +28,20 @@ def add_user():
     if form.validate_on_submit():
         user = UsersModel.query.filter_by(email=form.email.data).first()
         if user is None:
+            # Hash the password
+            hashed_pass = generate_password_hash(form.password_hash.data, "pbkdf2:sha256")
+
+            # put data into database
             user = UsersModel(name=form.name.data,
                               email=form.email.data,
-                              password_hash=form.password_hash.data)
+                              password_hash=hashed_pass)
             db.session.add(user)
             db.session.commit()
 
         name = form.name.data
         form.name.data = ''
         form.email.data = ''
-        form.password_hash.data = ''
+        # form.hashed_pass.data = ''
         flash("User added")
 
     all_users = UsersModel.query.order_by(UsersModel.date_added)
