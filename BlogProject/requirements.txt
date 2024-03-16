@@ -15,8 +15,14 @@ MarkupSafe==2.1.5
 mysql-connector==2.2.9
 mysql-connector-python==8.3.0
 numpy==1.24.4
+pandas==2.0.3
+PyMySQL==1.1.0
+python-dateutil==2.9.0.post0
+pytz==2024.1
+six==1.16.0
 SQLAlchemy==2.0.28
 typing-extensions==4.10.0
+tzdata==2024.1
 werkzeug==3.0.1
 wtforms==3.1.2
 zipp==3.18.1
