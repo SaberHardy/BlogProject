@@ -2,6 +2,7 @@ from flask import Flask, render_template, flash, request, redirect, url_for
 from models import UsersModel, db
 from forms import UserForm
 from secret_staff import SECRET_STAFF
+from flask_migrate import Migrate
 
 app = Flask(__name__, template_folder='templates')  # static_folder='static')
 
@@ -15,6 +16,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = SECRET_STAFF
 
 db.init_app(app)
 
+migrate = Migrate(app, db)
+
 
 @app.route('/user/add', methods=["Post", "Get"])
 def add_user():
@@ -24,13 +27,16 @@ def add_user():
     if form.validate_on_submit():
         user = UsersModel.query.filter_by(email=form.email.data).first()
         if user is None:
-            user = UsersModel(name=form.name.data, email=form.email.data)
+            user = UsersModel(name=form.name.data,
+                              email=form.email.data,
+                              password_hash=form.password_hash.data)
             db.session.add(user)
             db.session.commit()
 
         name = form.name.data
         form.name.data = ''
         form.email.data = ''
+        form.password_hash.data = ''
         flash("User added")
 
     all_users = UsersModel.query.order_by(UsersModel.date_added)
@@ -81,6 +87,7 @@ def update_user(id):
     if request.method == 'POST':
         user_to_update.name = request.form['name']
         user_to_update.email = request.form['email']
+        user_to_update.password1 = request.form['password1']
 
         try:
             db.session.commit()
@@ -94,6 +101,7 @@ def update_user(id):
     else:
         form.name.data = user_to_update.name
         form.email.data = user_to_update.email
+        form.email.password1 = user_to_update.password1
         return render_template("update_user.html",
                                form=form,
                                user_to_update=user_to_update)
