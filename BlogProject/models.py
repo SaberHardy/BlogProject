@@ -11,7 +11,7 @@ class UsersModel(db.Model):
     name = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
-    password_hash = db.Column(db.String(128))
+    password_hash = db.Column(db.String(255))
 
     @property
     def password(self):
