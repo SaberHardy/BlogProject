@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
-from models import UsersModel, db
-from forms import UserForm, PasswordForm
+from models import UsersModel, db, PostModel
+from forms import UserForm, PasswordForm, PostForm
 from secret_staff import SECRET_STAFF
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -18,6 +18,29 @@ app.config["SQLALCHEMY_DATABASE_URI"] = SECRET_STAFF
 db.init_app(app)
 
 migrate = Migrate(app, db)
+
+
+@app.route('/add-post', methods=['POST', 'GET'])
+def add_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = PostModel(
+            title=form.title.data,
+            content=form.content.data,
+            author=form.author.data,
+            slug=form.slug.data)
+
+        db.session.add(post)
+        db.session.commit()
+
+        flash("The post submitted successfully!")
+
+        form.title.data = ''
+        form.content.data = ''
+        form.author.data = ''
+        form.slug.data = ''
+
+    return render_template('add_post.html', form=form)
 
 
 @app.route('/user/add', methods=["Post", "Get"])
