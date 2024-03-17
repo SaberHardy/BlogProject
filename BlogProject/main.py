@@ -80,6 +80,17 @@ def all_users():
     return render_template("index.html", all_users=get_users)
 
 
+@app.route('/all_posts')
+def all_posts():
+    get_posts = PostModel.query.all()
+    return render_template("all_posts.html", get_posts=get_posts)
+
+
+@app.route('/post_detail/<int:id>', methods=['POST', 'GET'])
+def post_details(id):
+    post_to_see = db.session.get(PostModel, id)
+    return render_template('post_details.html', post_to_see=post_to_see)
+
 @app.route('/user/<name>/')
 def user(name):
     name = name
