@@ -21,6 +21,8 @@
                     <th scope="col">Post Title</th>
                     <th scope="col">Author</th>
                     <th scope="col">Date Created</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,6 +36,17 @@
                         </td>
                         <td>{{ post.author }}</td>
                         <td>{{ post.date_posted }}</td>
+
+                        <td>
+                            <a href="{{ url_for('update_post', id=post.id) }}">
+                                <i class="bi bi-pencil-square text-success"></i>
+                            </a>
+                        </td>
+{#                        <td>#}
+{#                            <a href="{{ url_for('dele', id=user.id) }}">#}
+{#                                <i class="bi bi-trash-fill text-danger"></i>#}
+{#                            </a>#}
+{#                        </td>#}
                     </tr>
                 {% endfor %}
                 </tbody>

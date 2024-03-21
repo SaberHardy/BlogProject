@@ -43,6 +43,29 @@ def add_post():
     return render_template('add_post.html', form=form)
 
 
+@app.route('/update-post/<int:id>/', methods=['GET', 'POST'])
+def update_post(id):
+    post_to_edit = PostModel.query.get_or_404(id)
+    form = PostForm()
+    if form.validate_on_submit():
+        post_to_edit.title = form.title.data
+        post_to_edit.author = form.author.data
+        post_to_edit.slug = form.slug.data
+        post_to_edit.content = form.content.data
+
+        db.session.add(post_to_edit)
+        db.session.commit()
+        flash("The post updated successfully!")
+        return redirect(url_for("post_details", id=post_to_edit.id))
+
+    form.title.data = post_to_edit.title
+    form.author.data = post_to_edit.author
+    form.slug.data = post_to_edit.slug
+    form.title.content = post_to_edit.content
+
+    return render_template('edit_post.html', form=form, post_to_edit=post_to_edit)
+
+
 @app.route('/user/add', methods=["Post", "Get"])
 def add_user():
     name = None
@@ -90,6 +113,7 @@ def all_posts():
 def post_details(id):
     post_to_see = db.session.get(PostModel, id)
     return render_template('post_details.html', post_to_see=post_to_see)
+
 
 @app.route('/user/<name>/')
 def user(name):
