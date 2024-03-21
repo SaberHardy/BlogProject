@@ -66,6 +66,20 @@ def update_post(id):
     return render_template('edit_post.html', form=form, post_to_edit=post_to_edit)
 
 
+@app.route('/delete/<int:id>/', methods=['GET', 'POST'])
+def delete_post(id):
+    post_to_delete = PostModel.query.get_or_404(id)
+    try:
+        db.session.delete(post_to_delete)
+        db.session.commit()
+        flash("Post deleted successfully")
+        return redirect(url_for('all_posts'))
+    except:
+        flash("Error user")
+
+    return redirect(url_for('all_posts'))
+
+
 @app.route('/user/add', methods=["Post", "Get"])
 def add_user():
     name = None
