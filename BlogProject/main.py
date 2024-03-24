@@ -4,6 +4,7 @@ from forms import UserForm, PasswordForm, PostForm
 from secret_staff import SECRET_STAFF
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import current_user, login_required, LoginManager
 
 app = Flask(__name__, template_folder='templates')  # static_folder='static')
 
@@ -15,9 +16,17 @@ app.config["SECRET_KEY"] = "mySecretKey"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://username:password@localhost/database_name"
 app.config["SQLALCHEMY_DATABASE_URI"] = SECRET_STAFF
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 db.init_app(app)
 
 migrate = Migrate(app, db)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return UsersModel.query.get(user_id)
 
 
 @app.route('/add-post', methods=['POST', 'GET'])
@@ -93,6 +102,7 @@ def add_user():
 
             # put data into database
             user = UsersModel(name=form.name.data,
+                              username=form.username.data,
                               email=form.email.data,
                               password_hash=hashed_pass)
             db.session.add(user)
@@ -100,6 +110,7 @@ def add_user():
 
         name = form.name.data
         form.name.data = ''
+        form.username.data = ''
         form.email.data = ''
         # form.hashed_pass.data = ''
         flash("User added")
@@ -164,7 +175,8 @@ def update_user(id):
     if request.method == 'POST':
         user_to_update.name = request.form['name']
         user_to_update.email = request.form['email']
-        user_to_update.password1 = request.form['password1']
+        user_to_update.username = request.form['username']
+        # user_to_update.password = request.form['password']
 
         try:
             db.session.commit()
@@ -178,15 +190,16 @@ def update_user(id):
     else:
         form.name.data = user_to_update.name
         form.email.data = user_to_update.email
-        form.email.password1 = user_to_update.password1
+        form.email.username = user_to_update.username
+        # form.password_hash.data = user_to_update.password
         return render_template("update_user.html",
                                form=form,
                                user_to_update=user_to_update)
 
 
-@app.route('/delete/<int:id>/', methods=['POST', 'GET'])
+@app.route('/delete/<int:id>/')
 def delete_user(id):
-    user_to_delete = db.session.get(UsersModel, id)
+    user_to_delete = UsersModel.query.get_or_404(id)
     try:
         db.session.delete(user_to_delete)
         db.session.commit()
