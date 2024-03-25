@@ -34,25 +34,25 @@
     </form>
     <br>
     <br>
-    {#    {% for user in all_users %}#}
-    {#        <div class="card shadow-lg mb-5 bg-white rounded" style="width: 50rem;">#}
-    {#            <div class="card-body box-shadow">#}
-    {#                <div class="name-edit">#}
-    {#                    <h5 class="card-title">{{ user.id }} - {{ user.name }}</h5>#}
-    {#                    <div class="btn-edit-rmv">#}
-    {#                        <a href="{{ url_for('update_user', id=user.id) }}">#}
-    {#                            <i class="bi bi-pencil-square text-success"></i>#}
-    {#                        </a>#}
-    {#                        <a href="{{ url_for('delete_user', id=user.id) }}">#}
-    {#                            <i class="bi bi-trash-fill text-danger"></i>#}
-    {#                        </a>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#                <p class="card-text"> {{ user.email }}</p>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#        <br>#}
-    {#    {% endfor %}#}
+        {% for user in all_users %}
+            <div class="card shadow-lg mb-5 bg-white rounded" style="width: 50rem;">
+                <div class="card-body box-shadow">
+                    <div class="name-edit">
+                        <h5 class="card-title">{{ user.id }} - {{ user.name }}</h5>
+                        <div class="btn-edit-rmv">
+                            <a href="{{ url_for('update_user', id=user.id) }}">
+                                <i class="bi bi-pencil-square text-success"></i>
+                            </a>
+                            <a href="{{ url_for('delete', id=user.id) }}">
+                                <i class="bi bi-trash-fill text-danger"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <p class="card-text"> {{ user.email }}</p>
+                </div>
+            </div>
+            <br>
+        {% endfor %}
 
 
 {% endblock %}

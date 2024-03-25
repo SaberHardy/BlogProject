@@ -168,7 +168,7 @@ def name():
     return render_template('name.html', name=name, form=form)
 
 
-@app.route('/update/<int:id>/', methods=['POST', 'GET'])
+@app.route('/update/<int:id>', methods=['POST', 'GET'])
 def update_user(id):
     form = UserForm(request.form)
     user_to_update = UsersModel.query.get_or_404(id)
@@ -199,7 +199,7 @@ def update_user(id):
                                user_to_update=user_to_update)
 
 
-@app.route('/delete/<int:id>/', methods=['POST', 'GET'])
+@app.route('/delete/<int:id>', methods=['POST', 'GET'])
 @login_required
 def delete(id):
     if id == current_user.id:
