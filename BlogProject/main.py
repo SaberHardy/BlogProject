@@ -1,10 +1,10 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
 from models import UsersModel, db, PostModel
-from forms import UserForm, PasswordForm, PostForm
+from forms import UserForm, PasswordForm, PostForm, LoginForm, RegisterForm
 from secret_staff import SECRET_STAFF
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import current_user, login_required, LoginManager
+from flask_login import current_user, login_required, LoginManager, login_user, logout_user
 
 app = Flask(__name__, template_folder='templates')  # static_folder='static')
 
@@ -241,3 +241,46 @@ def test_password():
                            password_to_check=password_to_check,
                            passed=passed
                            )
+
+
+login_manager = LoginManager()
+login_manager.init_app(app=app)
+login_manager.login_view = 'login'
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return UsersModel.query.get(int(user_id))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = UsersModel.query.filter_by(username=form.username.data).first()
+        if user:
+            # Check the hash
+            if check_password_hash(user.password_hash, form.password.data):
+                login_user(user)
+                flash("Login Succesfull!!")
+                return redirect(url_for('dashboard'))
+            else:
+                flash("Wrong Password - Try Again!")
+        else:
+            flash("That User Doesn't Exist! Try Again...")
+
+    return render_template('members/login.html', form=form)
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    flash("You Have Been Logged Out!")
+    return redirect(url_for('login'))
+
+
+@app.route('/dashboard', methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    return render_template('members/dashboard.html', )

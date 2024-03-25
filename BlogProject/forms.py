@@ -31,3 +31,15 @@ class PostForm(FlaskForm):
     author = StringField("Author", validators=[DataRequired()])
     slug = StringField("Slug", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+
+class LoginForm(FlaskForm):
+    username = StringField("User Name", validators=[DataRequired()])
+    password = PasswordField("Enter your Password!", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+
+class RegisterForm(FlaskForm):
+    username = StringField("User Name", validators=[DataRequired()])
+    password = PasswordField("Enter your Password!", validators=[DataRequired()])
+    submit = SubmitField("Submit")

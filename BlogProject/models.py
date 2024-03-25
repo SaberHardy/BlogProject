@@ -15,7 +15,7 @@ class PostModel(db.Model):
     slug = db.Column(db.String(255))
 
 
-class UsersModel(db.Model):
+class UsersModel(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     name = db.Column(db.String(200), nullable=False)
