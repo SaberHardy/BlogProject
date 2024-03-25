@@ -186,6 +186,7 @@ def update_user(id):
             flash("Error user")
             return render_template("update_user.html",
                                    form=form,
+                                   id=id,
                                    user_to_update=user_to_update)
     else:
         form.name.data = user_to_update.name
@@ -194,6 +195,7 @@ def update_user(id):
         # form.password_hash.data = user_to_update.password
         return render_template("update_user.html",
                                form=form,
+                               id=id,
                                user_to_update=user_to_update)
 
 

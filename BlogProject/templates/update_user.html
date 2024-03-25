@@ -2,38 +2,45 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+    {% if id == current_user.id %}
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ name|upper }}</strong> You are Welcome!
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
 
-    {% for message in get_flashed_messages() %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ name|upper }}</strong> You are Welcome!
-            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                    aria-label="Close"></button>
-        </div>
-    {% endfor %}
-
-    {% if name %}
-        <h1>Update User</h1>
-    {% else %}
-        <h1>Update User</h1>
-        <br>
-        <form method="post" action="/update/{{ user_to_update.id }}">
-            {{ form.hidden_tag() }}
-
-            {{ form.name.label() }}
-            {{ form.name(class="form-control") }}
-            {# {{ form.name(class="form-control", value=user_to_update.name) }}#}
-
-            {{ form.username.label() }}
-            {{ form.username(class="form-control", value=user_to_update.username) }}
-            {# {{ form.name(class="form-control", value=user_to_update.name) }}#}
-
-            {{ form.email.label() }}
-            {{ form.email(class="form-control") }}
-            {# {{ form.email(class="form-control", value=user_to_update.email) }}#}
-
+        {% if name %}
+            <h1>Update User</h1>
+        {% else %}
+            <h1>Update User</h1>
             <br>
-            {{ form.submit(class='btn btn-success') }}
-        </form>
-    {% endif %}
+            <form method="post" action="/update/{{ user_to_update.id }}">
+                {{ form.hidden_tag() }}
 
+                {{ form.name.label() }}
+                {{ form.name(class="form-control") }}
+                {# {{ form.name(class="form-control", value=user_to_update.name) }}#}
+
+                {{ form.username.label() }}
+                {{ form.username(class="form-control", value=user_to_update.username) }}
+                {# {{ form.name(class="form-control", value=user_to_update.name) }}#}
+
+                {{ form.email.label() }}
+                {{ form.email(class="form-control") }}
+                {# {{ form.email(class="form-control", value=user_to_update.email) }}#}
+
+                <br>
+                {{ form.submit(class='btn btn-success') }}
+            </form>
+        {% endif %}
+    {% else %}
+
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>You are not welcomed to this page!!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+    {% endif %}
 {% endblock %}
