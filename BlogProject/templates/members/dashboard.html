@@ -3,6 +3,11 @@
 
 {% block content %}
     <h1>Dashboard Page....!</h1>
-    <br>
-    <h1>You are logged in successfully!</h1>
+    <div class="text-left my-5">
+        <strong>Username: </strong>{{ current_user.username }}<br>
+        <strong>Name: </strong>{{ current_user.name }}<br>
+        <strong>Email: </strong>{{ current_user.email }}<br>
+        <strong>Date Joined: </strong>{{ current_user.date_added }}<br>
+        <strong></strong><br>
+    </div>
 {% endblock %}
