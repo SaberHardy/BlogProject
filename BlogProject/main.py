@@ -197,18 +197,33 @@ def update_user(id):
                                user_to_update=user_to_update)
 
 
-@app.route('/delete/<int:id>/')
-def delete_user(id):
-    user_to_delete = UsersModel.query.get_or_404(id)
-    try:
-        db.session.delete(user_to_delete)
-        db.session.commit()
-        flash("User deleted successfully")
-        return redirect(url_for('all_users'))
-    except:
-        flash("Error user")
+@app.route('/delete/<int:id>/', methods=['POST', 'GET'])
+@login_required
+def delete(id):
+    if id == current_user.id:
+        user_to_delete = UsersModel.query.get_or_404(id)
+        name = None
+        our_users = None
+        form = UserForm()
 
-    return redirect(url_for('all_users'))
+        try:
+            db.session.delete(user_to_delete)
+            db.session.commit()
+            flash("User Deleted Successfully!!")
+
+            our_users = UsersModel.query.order_by(UsersModel.date_added)
+            return render_template("add_user.html",
+                                   form=form,
+                                   name=name,
+                                   our_users=our_users)
+
+        except:
+            flash("Whoops! There was a problem deleting user, try again...")
+            return render_template("add_user.html",
+                                   form=form, name=name, our_users=our_users)
+    else:
+        flash("Sorry, you can't delete that user! ")
+        return redirect(url_for('dashboard'))
 
 
 # Password Test
