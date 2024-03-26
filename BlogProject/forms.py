@@ -30,7 +30,7 @@ class PostForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     # content = StringField("Content", validators=[DataRequired()], widget=TextArea())
     content = CKEditorField('Content', validators=[DataRequired()])
-    author = StringField("Author")
+    # author = StringField("Author")
     slug = StringField("Slug", validators=[DataRequired()])
     submit = SubmitField("Submit")
 

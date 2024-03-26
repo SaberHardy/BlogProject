@@ -51,13 +51,14 @@ def add_post():
 
     form.title.data = ''
     form.content.data = ''
-    form.author.data = ''
+    # form.author.data = ''
     form.slug.data = ''
 
     return render_template('add_post.html', form=form)
 
 
 @app.route('/update-post/<int:id>/', methods=['GET', 'POST'])
+@login_required
 def update_post(id):
     post_to_edit = PostModel.query.get_or_404(id)
     form = PostForm()
@@ -75,7 +76,7 @@ def update_post(id):
     form.title.data = post_to_edit.title
     # form.author.data = post_to_edit.author
     form.slug.data = post_to_edit.slug
-    form.title.content = post_to_edit.content
+    form.content.data = post_to_edit.content
 
     return render_template('edit_post.html', form=form, post_to_edit=post_to_edit)
 
