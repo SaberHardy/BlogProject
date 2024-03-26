@@ -51,3 +51,23 @@
 > Any time you want to make migrations just type:
 > flask db migrate -m "added something"
 > flask db upgrade
+
+
+-------- NOTES ----------
+> in case that you faced an error like this:
+> sqlalchemy.exc.NoReferencedTableError: Foreign key associated 
+> with column 'post_model.poster_id' 
+> could not find table 'usersmodel' 
+> with which to generate a foreign key to target column 'id'
+> 
+> In my case i have a UsersModel as a model for my database,
+> in relashionship the model will be like this:
+> 
+> new_field = db.Column(db.Integer, db.ForeignKey('users_model.id'))
+> So, Why users_model?
+> the reason is because the data is the tabel is containing two words:
+> Users and Model, in every word is uppercased, so, in the database,
+> the table should be called like this:
+> 
+> db.ForeignKey('users_model.id')
+

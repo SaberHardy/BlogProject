@@ -10,9 +10,11 @@ class PostModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     content = db.Column(db.Text())
-    author = db.Column(db.String(255))
+    # author = db.Column(db.String(255))
     date_posted = db.Column(db.DateTime, default=datetime.utcnow())
     slug = db.Column(db.String(255))
+    # create a foreign key for the users
+    poster_id = db.Column(db.Integer, db.ForeignKey('users_model.id'))
 
 
 class UsersModel(db.Model, UserMixin):
@@ -22,6 +24,8 @@ class UsersModel(db.Model, UserMixin):
     email = db.Column(db.String(100), nullable=False, unique=True)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     password_hash = db.Column(db.String(255))
+    # User can have a lot of posts
+    posts = db.relationship('PostModel', backref='poster')
 
     @property
     def password(self):

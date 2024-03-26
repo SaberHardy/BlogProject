@@ -33,10 +33,11 @@ def load_user(user_id):
 def add_post():
     form = PostForm()
     if form.validate_on_submit():
+        poster = current_user.id
         post = PostModel(
             title=form.title.data,
             content=form.content.data,
-            author=form.author.data,
+            poster_id=poster,
             slug=form.slug.data)
 
         db.session.add(post)
@@ -58,7 +59,7 @@ def update_post(id):
     form = PostForm()
     if form.validate_on_submit():
         post_to_edit.title = form.title.data
-        post_to_edit.author = form.author.data
+        # post_to_edit.author = form.author.data
         post_to_edit.slug = form.slug.data
         post_to_edit.content = form.content.data
 
@@ -68,7 +69,7 @@ def update_post(id):
         return redirect(url_for("post_details", id=post_to_edit.id))
 
     form.title.data = post_to_edit.title
-    form.author.data = post_to_edit.author
+    # form.author.data = post_to_edit.author
     form.slug.data = post_to_edit.slug
     form.title.content = post_to_edit.content
 
