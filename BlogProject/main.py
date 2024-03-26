@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
 from models import UsersModel, db, PostModel
-from forms import UserForm, PasswordForm, PostForm, LoginForm, RegisterForm
+from forms import UserForm, PasswordForm, PostForm, LoginForm, RegisterForm, SearchForm
 from secret_staff import SECRET_STAFF
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -302,3 +302,26 @@ def logout():
 @login_required
 def dashboard():
     return render_template('members/dashboard.html', )
+
+
+# pass any variable to navbar
+@app.context_processor
+def base():
+    form = SearchForm()
+    return dict(form=form)
+
+
+@app.route('/search_for', methods=["POST"])
+def search_for():
+    form = SearchForm()
+    posts = PostModel.query
+
+    if form.validate_on_submit():
+        post_searched = form.searched.data
+        posts = posts.filter(PostModel.title.like("%" + post_searched + "%"))
+        posts = posts.order_by(PostModel.title).all()
+
+        return render_template('search.html',
+                               form=form,
+                               searched=post_searched,
+                               posts=posts)

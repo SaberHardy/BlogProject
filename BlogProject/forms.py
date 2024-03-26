@@ -43,3 +43,8 @@ class RegisterForm(FlaskForm):
     username = StringField("User Name", validators=[DataRequired()])
     password = PasswordField("Enter your Password!", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+
+class SearchForm(FlaskForm):
+    searched = StringField("Searched...", validators=[DataRequired()])
+    submit = SubmitField("Submit")
