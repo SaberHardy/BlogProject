@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <center>
-        <h1>
-            Searched for .....! {{ searched }}
-        </h1>
+
+    <h2>
+        You are looking for: {{ searched }}
+    </h2>
+    {% if posts %}
         {% for post in posts %}
-            {{ post.title }}<br>
+            <div class="card my-5">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <a href="{{ url_for('all_posts') }}" class="btn btn-primary">Back Home</a>
+                </div>
+            </div>
         {% endfor %}
-    </center>
+    {% else %}
+        <h3>We don't have anything to show!</h3>
+    {% endif %}
 {% endblock %}
