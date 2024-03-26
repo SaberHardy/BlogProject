@@ -5,8 +5,10 @@ from secret_staff import SECRET_STAFF
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_required, LoginManager, login_user, logout_user
+from flask_ckeditor import CKEditor
 
 app = Flask(__name__, template_folder='templates')  # static_folder='static')
+ckeditor = CKEditor(app)
 
 # Create a Secret Key
 app.config["SECRET_KEY"] = "mySecretKey"
@@ -30,6 +32,7 @@ def load_user(user_id):
 
 
 @app.route('/add-post', methods=['POST', 'GET'])
+@login_required
 def add_post():
     form = PostForm()
     if form.validate_on_submit():
@@ -44,11 +47,12 @@ def add_post():
         db.session.commit()
 
         flash("The post submitted successfully!")
+        return redirect('all_posts')
 
-        form.title.data = ''
-        form.content.data = ''
-        form.author.data = ''
-        form.slug.data = ''
+    form.title.data = ''
+    form.content.data = ''
+    form.author.data = ''
+    form.slug.data = ''
 
     return render_template('add_post.html', form=form)
 

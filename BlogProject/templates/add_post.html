@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Home{% endblock %}
+{% block title %}Add Post{% endblock %}
 
 {% block content %}
 
@@ -17,8 +17,8 @@
         {{ form.title.label() }}
         {{ form.title(class="form-control mb-3") }}
 
-{#        {{ form.author.label() }}#}
-{#        {{ form.author(class="form-control mb-3") }}#}
+        {#        {{ form.author.label() }}#}
+        {#        {{ form.author(class="form-control mb-3") }}#}
 
         {{ form.slug.label() }}
         {{ form.slug(class="form-control mb-3") }}
@@ -29,5 +29,7 @@
         <br>
         {{ form.submit(class='btn btn-success') }}
     </form>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='content') }}
 
 {% endblock %}
