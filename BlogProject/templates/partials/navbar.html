@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-info">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">BlogWithMe</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,18 +8,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ url_for('all_users') }}">All Users</a>
+                    <a class="nav-link active" aria-current="page"
+                       href="{{ url_for('all_users') }}">
+                        All Users
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('user', name='saber') }}">User Profile</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('name') }}">Name</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('test_password') }}">CheckPass</a>
-                </li>
+                {#                <li class="nav-item">#}
+                {#                    <a class="nav-link" href="{{ url_for('name') }}">Name</a>#}
+                {#                </li>#}
+                {#                <li class="nav-item">#}
+                {#                    <a class="nav-link" href="{{ url_for('test_password') }}">CheckPass</a>#}
+                {#                </li>#}
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('add_post') }}">Add Post</a>
@@ -27,20 +29,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('all_posts') }}">All Posts</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('add_user') }}">Add User</a>
-                </li>
+
                 {% if current_user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('logout') }}">Logout User</a>
                     </li>
                 {% else %}
+
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('login') }}">Login User</a>
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('add_user') }}">Register</a>
-                </li>
+                        <a class="nav-link" href="{{ url_for('add_user') }}">Register</a>
+                    </li>
                 {% endif %}
             </ul>
             <form class="d-flex" role="search">
