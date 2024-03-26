@@ -26,6 +26,17 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 
+@app.route('/admin')
+@login_required
+def admin():
+    id = current_user.id
+    if id == 35:
+        return render_template('admin.html')
+    else:
+        flash("You are not the admin to make this page!!")
+        return redirect(url_for('all_posts'))
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return UsersModel.query.get(user_id)

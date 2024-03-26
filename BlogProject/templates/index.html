@@ -2,14 +2,12 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    {% if user_to_delete %}
-        {% for message in get_flashed_messages() %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>{{ user_to_delete.name }}</strong> Deleted Successfully!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endfor %}
-    {% endif %}
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
 
     <div class="text-center">
         <h2>All Users</h2>
@@ -34,18 +32,18 @@
                         <td>{{ user.username }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.date_added }}</td>
-{#                        {% if current_user.is_authenticated %}#}
-                            <td>
-                                <a href="{{ url_for('update_user', id=user.id) }}">
-                                    <i class="bi bi-pencil-square text-success"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ url_for('delete', id=user.id) }}">
-                                    <i class="bi bi-trash-fill text-danger"></i>
-                                </a>
-                            </td>
-{#                        {% endif %}#}
+                        {#                        {% if current_user.is_authenticated %}#}
+                        <td>
+                            <a href="{{ url_for('update_user', id=user.id) }}">
+                                <i class="bi bi-pencil-square text-success"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('delete', id=user.id) }}">
+                                <i class="bi bi-trash-fill text-danger"></i>
+                            </a>
+                        </td>
+                        {#                        {% endif %}#}
                     </tr>
                 {% endfor %}
                 </tbody>
