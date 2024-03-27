@@ -193,6 +193,7 @@ def update_user(id):
         user_to_update.name = request.form['name']
         user_to_update.email = request.form['email']
         user_to_update.username = request.form['username']
+        user_to_update.about_me = request.form['about_me']
         # user_to_update.password = request.form['password']
 
         try:
@@ -208,7 +209,8 @@ def update_user(id):
     else:
         form.name.data = user_to_update.name
         form.email.data = user_to_update.email
-        form.email.username = user_to_update.username
+        form.username.data = user_to_update.username
+        form.about_me.data = user_to_update.about_me
         # form.password_hash.data = user_to_update.password
         return render_template("update_user.html",
                                form=form,
@@ -317,7 +319,9 @@ def logout():
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    return render_template('members/dashboard.html', )
+    current_user_info = UsersModel.query.get(current_user.id)
+    about_author = current_user_info.about_me
+    return render_template('members/dashboard.html', about_author=about_author)
 
 
 # pass any variable to navbar

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField
 from wtforms.validators import DataRequired, EqualTo
 from wtforms.widgets import TextArea
 from flask_ckeditor import CKEditorField
@@ -8,6 +8,7 @@ from flask_ckeditor import CKEditorField
 class UserForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     username = StringField("User Name", validators=[DataRequired()])
+    about_me = TextAreaField("About me")
     email = StringField("Email", validators=[DataRequired()])
     password_hash = PasswordField("Password",
                                   validators=[DataRequired(),

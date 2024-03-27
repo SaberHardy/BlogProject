@@ -50,7 +50,7 @@
                 {% endif %}
             </ul>
             <div class="float-right mx-5">
-                <h4>{{ current_user.username|title }}</h4>
+                <h4><a href="{{ url_for('dashboard') }}"> {{ current_user.username|title }}</a></h4>
             </div>
             <form class="d-flex" role="search" method="post" action="{{ url_for('search_for') }}">
                 {{ form.hidden_tag() }}
