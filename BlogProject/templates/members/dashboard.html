@@ -2,12 +2,20 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <h1>Dashboard Page....!</h1>
-    <div class="text-left my-5">
-        <strong>Username: </strong>{{ current_user.username }}<br>
-        <strong>Name: </strong>{{ current_user.name }}<br>
-        <strong>Email: </strong>{{ current_user.email }}<br>
-        <strong>Date Joined: </strong>{{ current_user.date_added }}<br>
-        <strong></strong><br>
+    <div class="row">
+        <div class="col-md-10">
+            <h1>Welcome {{ current_user.username|upper }}</h1>
+            <div class="text-left my-5">
+                <strong>Username: </strong>{{ current_user.username }}<br>
+                <strong>Name: </strong>{{ current_user.name }}<br>
+                <strong>Email: </strong>{{ current_user.email }}<br>
+                <strong>Date Joined: </strong>{{ current_user.date_added }}<br>
+                <strong></strong><br>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <!-- Add your picture here -->
+            <img src="{{ url_for('static', filename='imgs/default_pict.png') }}" alt="User Image" class="img-fluid">
+        </div>
     </div>
 {% endblock %}
