@@ -6,12 +6,19 @@ from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_required, LoginManager, login_user, logout_user
 from flask_ckeditor import CKEditor
+from werkzeug.utils import secure_filename
+import uuid
+import os
 
 app = Flask(__name__, template_folder='templates')  # static_folder='static')
 ckeditor = CKEditor(app)
 
 # Create a Secret Key
 app.config["SECRET_KEY"] = "mySecretKey"
+
+UPLOAD_FOLDER = 'static/imgs/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 # Sqlite DB
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 # My SqlDB
@@ -189,6 +196,7 @@ def name():
 def update_user(id):
     form = UserForm(request.form)
     user_to_update = UsersModel.query.get_or_404(id)
+
     if request.method == 'POST':
         user_to_update.name = request.form['name']
         user_to_update.email = request.form['email']
@@ -196,12 +204,19 @@ def update_user(id):
         user_to_update.about_me = request.form['about_me']
         # user_to_update.password = request.form['password']
 
+        if 'profile_img' in request.files:
+            file = request.files['profile_img']
+            if file.filename != '':
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                user_to_update.profile_img = filename
+
         try:
             db.session.commit()
             flash("User updated successfully!")
-            return redirect(url_for('all_users'))
+            return redirect(url_for('dashboard'))
         except:
-            flash("Error user")
+            flash("Error updating user")
             return render_template("update_user.html",
                                    form=form,
                                    id=id,
@@ -216,7 +231,6 @@ def update_user(id):
                                form=form,
                                id=id,
                                user_to_update=user_to_update)
-
 
 @app.route('/delete/<int:id>', methods=['POST', 'GET'])
 @login_required

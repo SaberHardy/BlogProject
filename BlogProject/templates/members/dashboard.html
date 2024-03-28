@@ -12,13 +12,29 @@
                 <strong>Date Joined: </strong>{{ current_user.date_added }}<br>
                 <br>
                 <br>
-                <strong>About me: <br></strong>{{ about_author }}<br>
+                <strong>About me: <br></strong>{{ current_user.about_me }}<br>
 
+                {% if current_user.profile_img %}
+                    <strong>Profile Image:</strong><br>
+                    <img src="{{ url_for('static', filename='imgs/' + current_user.profile_img) }}"
+                         alt="Profile Image" width="500" height="300">
+                {% else %}
+                    <strong>No profile image uploaded.</strong>
+                {% endif %}
+                <br>
+                <br>
             </div>
         </div>
+
         <div class="col-md-2">
-            <!-- Add your picture here -->
-            <img src="{{ url_for('static', filename='imgs/default_pict.png') }}" alt="User Image" class="img-fluid">
+            {% if current_user.profile_img %}
+{#                <strong>Profile Image</strong><br>#}
+                <img class="rounded-circle" src="{{ url_for('static', filename='imgs/' + current_user.profile_img) }}"
+                     alt="Profile" width="100" height="100">
+            {% else %}
+                <strong>No profile image uploaded.</strong>
+            {% endif %}
         </div>
+    <a class="btn btn-info" href="{{ url_for('update_user', id=current_user.id) }}">Update Profile</a>
     </div>
 {% endblock %}

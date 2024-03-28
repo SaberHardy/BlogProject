@@ -16,32 +16,46 @@
         {% else %}
             <h1>Update User</h1>
             <br>
-            <form method="post" action="/update/{{ user_to_update.id }}">
+            <form method="post" action="/update/{{ user_to_update.id }}" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
 
-                {{ form.name.label() }}
-                {{ form.name(class="form-control") }}
-                {# {{ form.name(class="form-control", value=user_to_update.name) }}#}
+                <div class="form-group">
+                    {{ form.name.label(class="control-label") }}
+                    {{ form.name(class="form-control") }}
+                </div>
 
-                {{ form.username.label() }}
-                {{ form.username(class="form-control", value=user_to_update.username) }}
-                {# {{ form.name(class="form-control", value=user_to_update.name) }}#}
+                <div class="form-group">
+                    {{ form.username.label(class="control-label") }}
+                    {{ form.username(class="form-control") }}
+                </div>
 
-                {{ form.email.label() }}
-                {{ form.email(class="form-control") }}
-                {# {{ form.email(class="form-control", value=user_to_update.email) }}#}
-                {{ form.about_me.label() }}
-                {{ form.about_me(class="form-control") }}
-                <br>
-                {{ form.submit(class='btn btn-success') }}
+                <div class="form-group">
+                    {{ form.email.label(class="control-label") }}
+                    {{ form.email(class="form-control") }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.about_me.label(class="control-label") }}
+                    {{ form.about_me(class="form-control") }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.profile_img.label(class="control-label") }}
+                    {{ form.profile_img(class="form-control-file") }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-success") }}
+                </div>
             </form>
+
         {% endif %}
     {% else %}
 
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>You are not welcomed to this page!!</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                        aria-label="Close"></button>
-            </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>You are not welcomed to this page!!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+        </div>
     {% endif %}
 {% endblock %}

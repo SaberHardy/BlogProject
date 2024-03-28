@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, TextAreaField
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField, FileField
+from flask_wtf.file import FileAllowed
 from wtforms.validators import DataRequired, EqualTo
 from wtforms.widgets import TextArea
 from flask_ckeditor import CKEditorField
@@ -16,6 +17,7 @@ class UserForm(FlaskForm):
                                                       message='Passwords not matched')])
 
     password_hash2 = PasswordField("Confirm password", validators=[DataRequired()])
+    profile_img = FileField("Profile Picture", validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     submit = SubmitField("Submit")
 
 

@@ -23,6 +23,7 @@ class UsersModel(db.Model, UserMixin):
     name = db.Column(db.String(200), nullable=False)
     about_me = db.Column(db.Text(1000), nullable=True)
     email = db.Column(db.String(100), nullable=False, unique=True)
+    profile_img = db.Column(db.String(500), nullable=True)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     password_hash = db.Column(db.String(255))
     # User can have a lot of posts
